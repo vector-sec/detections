@@ -1,4 +1,4 @@
-name: "Link: Zipped OneNote file with Document Download Lure (QakBot)"
+name: "Link: Zipped OneNote file with Document Download Lure (QakBot) (first-time sender)"
 description: |
   A delivery technique leveraged for QakBot malware. Link to a hosted or auto-downloading zip file that contains a OneNote file which uses a document download lure.
 type: "rule"
@@ -32,15 +32,16 @@ source: |
           )
       )
   )
+  // first-time sender
   and (
-      (
-          sender.email.domain.root_domain in $free_email_providers
-          and sender.email.email not in $recipient_emails
-      )
-      or (
-          sender.email.domain.root_domain not in $free_email_providers
-          and sender.email.domain.domain not in $recipient_domains
-      )
+            (
+                sender.email.domain.root_domain in $free_email_providers
+                and sender.email.email not in $sender_emails
+            )
+            or (
+                sender.email.domain.root_domain not in $free_email_providers
+                and sender.email.domain.domain not in $sender_domains
+            )
   )
 tags:
   - "Suspicious Link"
