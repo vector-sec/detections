@@ -1,4 +1,4 @@
-name: "Link: Zipped OneNote File"
+name: "Link: Zipped OneNote File (first-time sender)"
 description: |
   Link to a hosted or auto-downloading zip file that contains a OneNote file.
 type: "rule"
@@ -20,15 +20,16 @@ source: |
           )
       )
   )
+  // first-time sender
   and (
-      (
-          sender.email.domain.root_domain in $free_email_providers
-          and sender.email.email not in $recipient_emails
-      )
-      or (
-          sender.email.domain.root_domain not in $free_email_providers
-          and sender.email.domain.domain not in $recipient_domains
-      )
+            (
+                sender.email.domain.root_domain in $free_email_providers
+                and sender.email.email not in $sender_emails
+            )
+            or (
+                sender.email.domain.root_domain not in $free_email_providers
+                and sender.email.domain.domain not in $sender_domains
+            )
   )
 tags:
   - "Suspicious Link"
